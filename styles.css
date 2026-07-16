@@ -26,6 +26,16 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 20px;
+}
+
+/* ===== MAIN TITLE ===== */
+.main-title {
+    color: #e91e63;
+    font-size: 2em;
+    letter-spacing: 1px;
+    text-align: center;
+    margin-bottom: 10px;
 }
 
 /* ===== JAR DISPLAY SECTION ===== */
@@ -63,7 +73,7 @@ body {
     top: -35px;
     left: 50%;
     transform: translateX(-50%);
-    width: 280px;
+    width: 230px;
     height: 50px;
     background: linear-gradient(135deg, #ff6b9d 0%, #e91e63 100%);
     border-radius: 15px;
@@ -581,8 +591,13 @@ body {
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 600px) {
+    .main-title {
+        font-size: 1.5em;
+        margin-bottom: 5px;
+    }
+    
     .main-container {
-        max-width: 100%;
+        gap: 15px;
     }
     
     .jar-section {
@@ -597,7 +612,7 @@ body {
     }
     
     .jar-lid {
-        width: 240px;
+        width: 200px;
         height: 45px;
         top: -30px;
     }
@@ -661,6 +676,10 @@ body {
 }
 
 @media (max-width: 400px) {
+    .main-title {
+        font-size: 1.3em;
+    }
+    
     .jar-section {
         padding: 30px 15px;
     }
@@ -672,7 +691,7 @@ body {
     }
     
     .jar-lid {
-        width: 210px;
+        width: 170px;
         height: 42px;
         top: -28px;
     }
