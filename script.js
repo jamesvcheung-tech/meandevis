@@ -1,11 +1,13 @@
 // Configuration
 const TARGET_DATE = new Date(2026, 8, 30); // September 30, 2026
 const STORAGE_KEY = 'loveNoteJar';
+const ADMIN_PASSWORD = 'love2026'; // Change this to your own password
 
 // State
 let notes = {};
 let currentDate = new Date();
 currentDate.setHours(0, 0, 0, 0);
+let isAdminAuth = false;
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
@@ -13,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
     renderJar();
     updateTodayInfo();
     setupEventListeners();
-    renderNotesEditor();
 });
 
 // Load notes from localStorage
@@ -76,11 +77,10 @@ function renderJar() {
     const preview = document.getElementById('notesPreview');
     preview.innerHTML = '';
     
-    const allDates = getAllDates();
     const filledNotes = Object.keys(notes).length;
     
     // Show notes in jar
-    for (let i = 0; i < Math.min(filledNotes, 30); i++) {
+    for (let i = 0; i < Math.min(filledNotes, 40); i++) {
         const noteDiv = document.createElement('div');
         noteDiv.className = 'note-preview';
         noteDiv.style.setProperty('--rotation', Math.random() > 0.5 ? '-15deg' : '15deg');
@@ -112,7 +112,7 @@ function openNoteModal() {
     const todayNote = notes[todayStr];
     
     if (!todayNote) {
-        alert('No note set for today yet. Customize messages to add one! 💕');
+        alert('No note set for today yet. 💕');
         return;
     }
     
@@ -126,10 +126,48 @@ function closeNoteModal() {
     document.getElementById('noteModal').style.display = 'none';
 }
 
-// Toggle editor visibility
-function toggleEditor() {
+// Open password modal
+function openPasswordModal() {
+    document.getElementById('passwordModal').style.display = 'block';
+    document.getElementById('passwordInput').focus();
+    document.getElementById('passwordError').textContent = '';
+}
+
+// Close password modal
+function closePasswordModal() {
+    document.getElementById('passwordModal').style.display = 'none';
+    document.getElementById('passwordInput').value = '';
+    document.getElementById('passwordError').textContent = '';
+}
+
+// Check password
+function checkPassword() {
+    const input = document.getElementById('passwordInput');
+    if (input.value === ADMIN_PASSWORD) {
+        isAdminAuth = true;
+        closePasswordModal();
+        openEditor();
+    } else {
+        document.getElementById('passwordError').textContent = 'Incorrect password';
+        input.value = '';
+        input.focus();
+    }
+}
+
+// Open editor
+function openEditor() {
     const editor = document.getElementById('editorSection');
-    editor.classList.toggle('hidden');
+    editor.classList.remove('hidden');
+    renderNotesEditor();
+    // Prevent background scrolling
+    document.body.style.overflow = 'hidden';
+}
+
+// Close editor
+function closeEditor() {
+    const editor = document.getElementById('editorSection');
+    editor.classList.add('hidden');
+    document.body.style.overflow = 'auto';
 }
 
 // Render notes editor
@@ -176,13 +214,13 @@ function generateAllDates() {
         'I love you more than words can say! 💕',
         'You make every day brighter. ✨',
         'Thank you for being my person. 💑',
-        'I'm so grateful for your smile. 😊',
-        'You're my favorite person. 💫',
+        'I\'m so grateful for your smile. 😊',
+        'You\'re my favorite person. 💫',
         'Every moment with you is special. ⏰',
         'You inspire me every day. 🌟',
         'I love your laugh so much. 😄',
-        'You're my greatest adventure. 🗺️',
-        'Forever isn't long enough with you. 💞'
+        'You\'re my greatest adventure. 🗺️',
+        'Forever isn\'t long enough with you. 💞'
     ];
     
     allDates.forEach((date, index) => {
@@ -201,7 +239,7 @@ function generateAllDates() {
 
 // Setup event listeners
 function setupEventListeners() {
-    // Modal
+    // Note modal
     document.getElementById('openNoteBtn').addEventListener('click', openNoteModal);
     document.querySelector('.close').addEventListener('click', closeNoteModal);
     window.addEventListener('click', (e) => {
@@ -211,17 +249,26 @@ function setupEventListeners() {
         }
     });
     
-    // Editor toggle
-    document.getElementById('toggleEditorBtn').addEventListener('click', toggleEditor);
-    document.getElementById('closeEditorBtn').addEventListener('click', toggleEditor);
+    // Password modal
+    document.getElementById('adminBtn').addEventListener('click', openPasswordModal);
+    document.addEventListener('keypress', (e) => {
+        if (document.getElementById('passwordModal').style.display === 'block' && e.key === 'Enter') {
+            checkPassword();
+        }
+    });
+    window.addEventListener('click', (e) => {
+        const modal = document.getElementById('passwordModal');
+        if (e.target === modal) {
+            closePasswordModal();
+        }
+    });
     
-    // Save button
+    // Editor
+    document.getElementById('closeEditorBtn').addEventListener('click', closeEditor);
     document.getElementById('saveCustBtn').addEventListener('click', () => {
         saveNotes();
         renderJar();
         updateTodayInfo();
     });
-    
-    // Generate dates button
     document.getElementById('generateDatesBtn').addEventListener('click', generateAllDates);
 }

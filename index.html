@@ -8,61 +8,74 @@
 </head>
 <body>
     <div class="container">
-        <div class="jar-wrapper">
-            <!-- Jar Display Section -->
-            <div class="jar-section">
-                <h1>💕 Love Note Jar 💕</h1>
-                <div class="jar-display">
-                    <div class="jar">
-                        <div class="jar-lid"></div>
-                        <div class="jar-body">
-                            <div class="notes-preview" id="notesPreview">
-                                <!-- Notes preview will go here -->
-                            </div>
+        <!-- Jar Display Section -->
+        <div class="jar-section">
+            <h1>💕 Love Note Jar 💕</h1>
+            <div class="jar-display">
+                <div class="jar">
+                    <div class="jar-lid"></div>
+                    <div class="jar-body">
+                        <div class="notes-preview" id="notesPreview">
+                            <!-- Notes preview will go here -->
                         </div>
                     </div>
                 </div>
-                <div class="jar-info">
-                    <p id="todayInfo" class="today-info"></p>
-                    <button id="openNoteBtn" class="btn btn-primary">Open Today's Note</button>
-                    <button id="toggleEditorBtn" class="btn btn-secondary">Customize Messages</button>
-                </div>
             </div>
-
-            <!-- Modal for Today's Note -->
-            <div id="noteModal" class="modal">
-                <div class="modal-content note-display">
-                    <span class="close">&times;</span>
-                    <h2>Today's Love Note</h2>
-                    <p id="todayNote" class="note-text"></p>
-                    <p id="noteDate" class="note-date"></p>
-                    <button class="btn btn-primary" onclick="closeNoteModal()">Close</button>
-                </div>
+            <div class="jar-info">
+                <p id="todayInfo" class="today-info"></p>
+                <button id="openNoteBtn" class="btn btn-primary">Open Today's Note</button>
             </div>
         </div>
 
-        <!-- Editor Section -->
-        <div id="editorSection" class="editor-section hidden">
-            <div class="editor-header">
-                <h2>Customize Your Love Notes</h2>
-                <button id="closeEditorBtn" class="btn btn-close">✕</button>
+        <!-- Modal for Today's Note -->
+        <div id="noteModal" class="modal">
+            <div class="modal-content note-display">
+                <span class="close">&times;</span>
+                <h2>Today's Love Note</h2>
+                <p id="todayNote" class="note-text"></p>
+                <p id="noteDate" class="note-date"></p>
+                <button class="btn btn-primary" onclick="closeNoteModal()">Close</button>
             </div>
-            
-            <div class="editor-instructions">
-                <p>Create personalized love notes for each day until September 30th. Leave a day blank to skip it.</p>
-            </div>
+        </div>
 
-            <div class="editor-controls">
-                <button id="generateDatesBtn" class="btn btn-secondary">Generate All Dates</button>
-                <button id="saveCustBtn" class="btn btn-success">Save Changes</button>
-                <span id="saveStatus" class="save-status"></span>
-            </div>
-
-            <div id="notesEditor" class="notes-editor">
-                <!-- Dynamic note inputs will be generated here -->
+        <!-- Password Modal -->
+        <div id="passwordModal" class="modal">
+            <div class="modal-content password-modal">
+                <h2>Enter Admin Password</h2>
+                <input type="password" id="passwordInput" placeholder="Enter password..." class="password-input">
+                <div class="password-buttons">
+                    <button class="btn btn-success" onclick="checkPassword()">Enter</button>
+                    <button class="btn btn-secondary" onclick="closePasswordModal()">Cancel</button>
+                </div>
+                <p id="passwordError" class="password-error"></p>
             </div>
         </div>
     </div>
+
+    <!-- Editor Section (Hidden by default) -->
+    <div id="editorSection" class="editor-section hidden">
+        <div class="editor-header">
+            <h2>Customize Your Love Notes</h2>
+            <button id="closeEditorBtn" class="btn btn-close">✕</button>
+        </div>
+        
+        <div class="editor-instructions">
+            <p>Create personalized love notes for each day until September 30th. Leave a day blank to skip it.</p>
+        </div>
+
+        <div class="editor-controls">
+            <button id="generateDatesBtn" class="btn btn-secondary">Generate All Dates</button>
+            <button id="saveCustBtn" class="btn btn-success">Save Changes</button>
+            <span id="saveStatus" class="save-status"></span>
+        </div>
+
+        <div id="notesEditor" class="notes-editor">
+            <!-- Dynamic note inputs will be generated here -->
+        </div>
+    </div>
+
+    <!-- Admin Button (floating) -->
+    <button id="adminBtn" class="admin-btn" title="Admin access">⚙️</button>
 
     <script src="script.js"></script>
 </body>
