@@ -1,7 +1,7 @@
 // Configuration
 const TARGET_DATE = new Date(2026, 8, 30); // September 30, 2026
 const STORAGE_KEY = 'loveNoteJar';
-const ADMIN_PASSWORD = 'love2026'; // Change this to your own password
+const ADMIN_PASSWORD = 'Cougnnf8'; // Change this to your own password
 
 // State
 let notes = {};
