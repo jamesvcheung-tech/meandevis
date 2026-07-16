@@ -1,16 +1,22 @@
 // Configuration
 const TARGET_DATE = new Date(2026, 8, 30); // September 30, 2026
 const STORAGE_KEY = 'loveNoteJar';
+const GALLERY_KEY = 'loveNoteGallery'; // For previously read notes
+const LAST_OPENED_KEY = 'lastOpenedDate'; // Track which day's note was last opened
 const PASSWORD = 'bunny'; // Easter egg password
 
 // State
 let notes = {};
+let gallery = []; // Previously read notes
+let lastOpenedDate = null; // Last date a note was opened
 let currentDate = new Date();
 currentDate.setHours(0, 0, 0, 0);
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
     loadNotes();
+    loadGallery();
+    loadLastOpenedDate();
     renderJar();
     updateTodayInfo();
     setupEventListeners();
@@ -27,10 +33,39 @@ function loadNotes() {
     }
 }
 
+// Load gallery (previously read notes) from localStorage
+function loadGallery() {
+    const stored = localStorage.getItem(GALLERY_KEY);
+    if (stored) {
+        gallery = JSON.parse(stored);
+    } else {
+        gallery = [];
+    }
+}
+
+// Load last opened date
+function loadLastOpenedDate() {
+    const stored = localStorage.getItem(LAST_OPENED_KEY);
+    if (stored) {
+        lastOpenedDate = stored;
+    }
+}
+
 // Save notes to localStorage
 function saveNotes() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
     showSaveStatus('Changes saved! 💾');
+}
+
+// Save gallery to localStorage
+function saveGallery() {
+    localStorage.setItem(GALLERY_KEY, JSON.stringify(gallery));
+}
+
+// Save last opened date
+function saveLastOpenedDate(dateStr) {
+    lastOpenedDate = dateStr;
+    localStorage.setItem(LAST_OPENED_KEY, dateStr);
 }
 
 // Show save status
@@ -72,24 +107,21 @@ function formatDate(date) {
     return date.toLocaleDateString('en-US', options);
 }
 
-// Render the jar display
+// Render the jar display with gallery notes
 function renderJar() {
     const preview = document.getElementById('notesPreview');
     preview.innerHTML = '';
     
-    const allDates = getAllDates();
-    const filledNotes = Object.keys(notes).length;
-    
-    // Show notes in jar
-    for (let i = 0; i < Math.min(filledNotes, 30); i++) {
+    // Show notes from the gallery (previously read notes)
+    for (let i = 0; i < Math.min(gallery.length, 30); i++) {
         const noteDiv = document.createElement('div');
         noteDiv.className = 'note-preview';
         noteDiv.style.setProperty('--rotation', Math.random() > 0.5 ? '-15deg' : '15deg');
         preview.appendChild(noteDiv);
     }
     
-    if (filledNotes === 0) {
-        preview.innerHTML = '<p style="color: #ccc; font-size: 0.9em;">Start customizing to fill the jar! 💕</p>';
+    if (gallery.length === 0) {
+        preview.innerHTML = '<p style="color: #ccc; font-size: 0.9em;">Start reading to fill the jar! 💕</p>';
     }
 }
 
@@ -123,6 +155,19 @@ function openNoteModal() {
         return;
     }
     
+    // If a note was opened on a previous day, add it to gallery
+    if (lastOpenedDate && lastOpenedDate !== todayStr) {
+        if (!gallery.includes(lastOpenedDate)) {
+            gallery.push(lastOpenedDate);
+            saveGallery();
+            renderJar();
+        }
+    }
+    
+    // Update last opened date to today
+    saveLastOpenedDate(todayStr);
+    
+    // Display today's note
     document.getElementById('todayNote').textContent = todayNote;
     document.getElementById('noteDate').textContent = formatDate(currentDate);
     document.getElementById('noteModal').style.display = 'block';
