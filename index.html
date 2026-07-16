@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Love Note Jar</title>
+    <title>for evelyn</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
+    <div class="main-container">
         <!-- Jar Display Section -->
         <div class="jar-section">
-            <h1> for evelyn </h1>
             <div class="jar-display">
                 <div class="jar">
-                    <div class="jar-lid"></div>
+                    <div class="jar-lid">
+                        <div class="lid-label">for evelyn</div>
+                    </div>
                     <div class="jar-body">
                         <div class="notes-preview" id="notesPreview">
-                            <!-- Notes preview will go here -->
+                            <!-- Paper notes will go here -->
                         </div>
                     </div>
                 </div>
@@ -24,6 +25,7 @@
             <div class="jar-info">
                 <p id="todayInfo" class="today-info"></p>
                 <button id="openNoteBtn" class="btn btn-primary">Open Today's Note</button>
+                <button id="galleryBtn" class="btn btn-gallery">🎨 Gallery</button>
             </div>
         </div>
 
@@ -35,6 +37,17 @@
                 <p id="todayNote" class="note-text"></p>
                 <p id="noteDate" class="note-date"></p>
                 <button class="btn btn-primary" onclick="closeNoteModal()">Close</button>
+            </div>
+        </div>
+
+        <!-- Gallery Modal -->
+        <div id="galleryModal" class="modal">
+            <div class="modal-content gallery-display">
+                <span class="close" onclick="closeGalleryModal()">&times;</span>
+                <h2>💕 Past Notes Gallery</h2>
+                <div id="galleryContainer" class="gallery-container">
+                    <!-- Gallery notes will be populated here -->
+                </div>
             </div>
         </div>
 

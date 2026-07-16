@@ -102,7 +102,7 @@ function updateTodayInfo() {
     infoText.innerHTML = `
         <strong>${formatDate(currentDate)}</strong><br>
         ${daysRemaining} days until September 30th 💫
-        ${hasNote ? '<br>✨ Today\\'s note is waiting!' : ''}
+        ${hasNote ? '<br>✨ Today\'s note is waiting!' : ''}
     `;
 }
 
@@ -124,6 +124,48 @@ function openNoteModal() {
 // Close note modal
 function closeNoteModal() {
     document.getElementById('noteModal').style.display = 'none';
+}
+
+// Open gallery modal
+function openGalleryModal() {
+    const container = document.getElementById('galleryContainer');
+    const allDates = getAllDates();
+    container.innerHTML = '';
+    
+    // Get all past notes (notes from before today)
+    const pastNotes = [];
+    allDates.forEach((date) => {
+        const dateStr = getDateString(date);
+        if (date < currentDate && notes[dateStr]) {
+            pastNotes.push({
+                date: date,
+                dateStr: dateStr,
+                note: notes[dateStr]
+            });
+        }
+    });
+    
+    if (pastNotes.length === 0) {
+        container.innerHTML = '<div class="gallery-empty"><p>No past notes yet...</p><p>Once you open notes from previous days, they\'ll appear here! 💕</p></div>';
+    } else {
+        // Display in reverse order (most recent first)
+        pastNotes.reverse().forEach((item) => {
+            const card = document.createElement('div');
+            card.className = 'gallery-note-card';
+            card.innerHTML = `
+                <div class="gallery-note-date">${formatDate(item.date)}</div>
+                <div class="gallery-note-text">${item.note}</div>
+            `;
+            container.appendChild(card);
+        });
+    }
+    
+    document.getElementById('galleryModal').style.display = 'block';
+}
+
+// Close gallery modal
+function closeGalleryModal() {
+    document.getElementById('galleryModal').style.display = 'none';
 }
 
 // Open password modal
@@ -246,6 +288,15 @@ function setupEventListeners() {
         const modal = document.getElementById('noteModal');
         if (e.target === modal) {
             modal.style.display = 'none';
+        }
+    });
+    
+    // Gallery modal
+    document.getElementById('galleryBtn').addEventListener('click', openGalleryModal);
+    window.addEventListener('click', (e) => {
+        const galleryModal = document.getElementById('galleryModal');
+        if (e.target === galleryModal) {
+            closeGalleryModal();
         }
     });
     
