@@ -72,15 +72,15 @@ function formatDate(date) {
     return date.toLocaleDateString('en-US', options);
 }
 
-// Render the jar display
+// Render the jar display with paper notes
 function renderJar() {
     const preview = document.getElementById('notesPreview');
     preview.innerHTML = '';
     
     const filledNotes = Object.keys(notes).length;
     
-    // Show notes in jar
-    for (let i = 0; i < Math.min(filledNotes, 40); i++) {
+    // Show notes in jar (max 10 visible)
+    for (let i = 0; i < Math.min(filledNotes, 10); i++) {
         const noteDiv = document.createElement('div');
         noteDiv.className = 'note-preview';
         noteDiv.style.setProperty('--rotation', Math.random() > 0.5 ? '-15deg' : '15deg');
@@ -102,7 +102,7 @@ function updateTodayInfo() {
     infoText.innerHTML = `
         <strong>${formatDate(currentDate)}</strong><br>
         ${daysRemaining} days until September 30th 💫
-        ${hasNote ? '<br>✨ Today\'s note is waiting!' : ''}
+        ${hasNote ? '<br>✨ Today\\'s note is waiting!' : ''}
     `;
 }
 
