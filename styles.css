@@ -4,10 +4,14 @@
     box-sizing: border-box;
 }
 
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -16,23 +20,17 @@ body {
 
 .container {
     width: 100%;
-    max-width: 1200px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    align-items: flex-start;
-}
-
-/* ===== JAR DISPLAY SECTION ===== */
-.jar-wrapper {
+    max-width: 600px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 
+/* ===== JAR DISPLAY SECTION ===== */
 .jar-section {
     background: white;
-    padding: 40px;
+    padding: 40px 30px;
     border-radius: 20px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     text-align: center;
@@ -41,25 +39,25 @@ body {
 
 .jar-section h1 {
     color: #e91e63;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     font-size: 2em;
     letter-spacing: 1px;
 }
 
 .jar-display {
-    margin: 30px 0;
+    margin: 20px 0;
     display: flex;
     justify-content: center;
 }
 
 .jar {
     position: relative;
-    width: 200px;
-    height: 280px;
+    width: 220px;
+    height: 300px;
     background: linear-gradient(90deg, #f5f5f5 0%, #ffffff 50%, #f5f5f5 100%);
     border: 3px solid #ddd;
-    border-radius: 0 0 30px 30px;
-    padding: 15px;
+    border-radius: 0 0 35px 35px;
+    padding: 20px;
     box-shadow: inset -5px 0 15px rgba(0, 0, 0, 0.1);
 }
 
@@ -68,8 +66,8 @@ body {
     top: -15px;
     left: 50%;
     transform: translateX(-50%);
-    width: 140px;
-    height: 20px;
+    width: 150px;
+    height: 22px;
     background: linear-gradient(135deg, #ff6b9d 0%, #e91e63 100%);
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(233, 30, 99, 0.4);
@@ -91,15 +89,15 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     align-content: center;
-    gap: 8px;
+    gap: 10px;
     padding: 10px;
 }
 
 .note-preview {
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     background: #ff6b9d;
-    border-radius: 3px;
+    border-radius: 4px;
     transform: rotate(-15deg);
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
     animation: float 3s ease-in-out infinite;
@@ -123,14 +121,15 @@ body {
 }
 
 .jar-info {
-    margin-top: 30px;
+    margin-top: 25px;
 }
 
 .today-info {
-    font-size: 1.1em;
+    font-size: 1em;
     color: #666;
     margin-bottom: 20px;
     font-weight: 500;
+    line-height: 1.4;
 }
 
 /* ===== BUTTONS ===== */
@@ -142,7 +141,7 @@ body {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin: 10px;
+    margin: 10px 5px;
 }
 
 .btn-primary {
@@ -189,6 +188,29 @@ body {
     background: #da190b;
 }
 
+/* ===== ADMIN BUTTON ===== */
+.admin-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(102, 126, 234, 0.8);
+    border: none;
+    color: white;
+    font-size: 1.5em;
+    cursor: pointer;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    z-index: 500;
+}
+
+.admin-btn:hover {
+    background: rgba(102, 126, 234, 1);
+    transform: scale(1.1);
+}
+
 /* ===== MODAL ===== */
 .modal {
     display: none;
@@ -200,6 +222,7 @@ body {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.6);
     animation: fadeIn 0.3s ease;
+    overflow-y: auto;
 }
 
 @keyframes fadeIn {
@@ -265,14 +288,62 @@ body {
     color: black;
 }
 
+/* ===== PASSWORD MODAL ===== */
+.password-modal {
+    max-width: 400px;
+}
+
+.password-modal h2 {
+    color: #667eea;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.password-input {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1em;
+    margin-bottom: 20px;
+    transition: border-color 0.3s ease;
+}
+
+.password-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.password-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.password-error {
+    color: #f44336;
+    font-size: 0.9em;
+    margin-top: 15px;
+    text-align: center;
+}
+
 /* ===== EDITOR SECTION ===== */
 .editor-section {
     background: white;
     padding: 40px;
     border-radius: 20px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    max-height: 80vh;
+    max-height: 85vh;
     overflow-y: auto;
+    width: 100%;
+    max-width: 900px;
+    margin: 20px auto;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
 }
 
 .editor-section.hidden {
@@ -308,6 +379,7 @@ body {
     gap: 10px;
     margin-bottom: 30px;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .save-status {
@@ -319,7 +391,7 @@ body {
 
 .notes-editor {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
 }
 
@@ -362,40 +434,72 @@ body {
 }
 
 /* ===== RESPONSIVE ===== */
-@media (max-width: 968px) {
-    .container {
-        grid-template-columns: 1fr;
-        gap: 30px;
+@media (max-width: 768px) {
+    .jar {
+        width: 200px;
+        height: 280px;
+    }
+    
+    .jar-lid {
+        width: 130px;
+    }
+    
+    .note-preview {
+        width: 30px;
+        height: 30px;
     }
     
     .notes-editor {
         grid-template-columns: 1fr;
     }
+    
+    .editor-section {
+        padding: 30px;
+        max-height: 90vh;
+        width: calc(100% - 20px);
+    }
+    
+    .admin-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3em;
+        bottom: 20px;
+        right: 20px;
+    }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 480px) {
+    .jar-section {
+        padding: 30px 20px;
+    }
+    
+    .jar {
+        width: 180px;
+        height: 260px;
+    }
+    
+    .jar-lid {
+        width: 110px;
+    }
+    
     .jar-section h1 {
         font-size: 1.5em;
     }
     
-    .jar {
-        width: 150px;
-        height: 220px;
+    .btn {
+        padding: 10px 16px;
+        font-size: 0.9em;
+        margin: 5px 0;
     }
     
-    .jar-lid {
-        width: 100px;
+    .editor-section {
+        padding: 20px;
+        width: calc(100% - 20px);
     }
     
     .editor-header {
         flex-direction: column;
         gap: 15px;
         align-items: flex-start;
-    }
-    
-    .btn {
-        padding: 10px 16px;
-        font-size: 0.9em;
-        margin: 5px;
     }
 }
